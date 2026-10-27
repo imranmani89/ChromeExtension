@@ -13,13 +13,26 @@ Live Download Speed Monitor is a lightweight Chrome extension that displays your
 
 The speed estimate is calculated from the change in downloaded bytes between popup updates. It starts at `0 Bytes/s` until the next sample is available. The popup only refreshes while it is open.
 
-## Install for development
+## Build a distributable package
 
-1. Download or clone this repository.
-2. Open `chrome://extensions` in Chrome.
-3. Turn on **Developer mode**.
-4. Select **Load unpacked** and choose the folder containing `manifest.json`.
-5. Pin the extension from Chrome's Extensions menu if you want to keep it visible in the toolbar.
+The packaging script requires Node.js and has no third-party dependencies. From the repository directory, run:
+
+```sh
+node pack-extension.js
+```
+
+This creates `dist/live-download-speed-monitor.zip`. The archive contains the extension's manifest, popup files, and background service worker. The generated `dist/` folder and any `.pem` private keys or `.crx` files are ignored by Git.
+
+## Install in Chrome
+
+Chrome does not install an extension directly from this ZIP. Extract the ZIP to a folder, then:
+
+1. Open `chrome://extensions` in Chrome.
+2. Turn on **Developer mode**.
+3. Select **Load unpacked** and choose the extracted folder containing `manifest.json`.
+4. Pin the extension from Chrome's Extensions menu if you want to keep it visible in the toolbar.
+
+For development, you can also load the repository directory directly using the same steps; no build is needed.
 
 ## Use
 
