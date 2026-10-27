@@ -26,6 +26,12 @@
       box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       font-size: 12px;
     }
+    .download-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
     .filename {
       font-weight: 600;
       white-space: nowrap;
@@ -33,11 +39,41 @@
       text-overflow: ellipsis;
       margin-bottom: 4px;
     }
+    .status {
+      flex: 0 0 auto;
+      border-radius: 10px;
+      padding: 2px 7px;
+      background: #e8eef7;
+      color: #35506f;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .status-completed {
+      background: #e5f4e8;
+      color: #28643a;
+    }
+    .status-paused {
+      background: #fff3d6;
+      color: #805a00;
+    }
+    .status-cancelled,
+    .status-interrupted {
+      background: #fde8e7;
+      color: #9c2f2a;
+    }
+    .speed {
+      font-weight: bold;
+      color: #0066cc;
+    }
     .details {
       display: flex;
       justify-content: space-between;
       color: #666;
       margin-top: 4px;
+    }
+    .time-remaining {
+      color: #666;
+      margin-top: 5px;
     }
     progress {
       width: 100%;
@@ -53,9 +89,9 @@
   </style>
 </head>
 <body>
-  <h3>Active Downloads</h3>
+  <h3>Recent Downloads</h3>
   <div id="downloads-container">
-    <div class="no-downloads">No active downloads</div>
+    <div class="no-downloads">No recent downloads</div>
   </div>
 
   <script src="popup.js"></script>
