@@ -46,13 +46,27 @@ function createTextElement(tagName, className, text) {
   return element;
 }
 
+function createActionButton(label, action) {
+  const button = createTextElement('button', 'file-action', label);
+  button.type = 'button';
+  button.addEventListener('click', action);
+  return button;
+}
+
+function openDownloadsPage() {
+  chrome.tabs.create({ url: 'chrome://downloads/' }, () => {
+    if (chrome.runtime.lastError) {
+      console.error('Unable to open the Downloads page:', chrome.runtime.lastError.message);
+    }
+  });
+}
+
 function renderDownloads(downloads) {
   const container = document.getElementById('downloads-container');
   container.innerHTML = '';
 
   if (downloads.length === 0) {
     container.appendChild(createTextElement('div', 'no-downloads', 'No recent downloads'));
-    return;
   }
 
   const currentTimestamp = Date.now();
@@ -137,6 +151,18 @@ function renderDownloads(downloads) {
       card.appendChild(createTextElement('div', 'time-remaining', `Time remaining: ${remaining}`));
     }
 
+    // if (item.filename) {
+    //   card.appendChild(createTextElement('div', 'saved-location', `Saved to: ${item.filename}`));
+    // }
+
+    if (item.state === 'complete') {
+      const actions = document.createElement('div');
+      actions.className = 'file-actions';
+      actions.appendChild(createActionButton('Folder', () => chrome.downloads.show(id)));
+      actions.appendChild(createActionButton('Open', () => chrome.downloads.open(id)));
+      card.appendChild(actions);
+    }
+
     container.appendChild(card);
   });
 
@@ -146,6 +172,7 @@ function renderDownloads(downloads) {
       delete previousData[id];
     }
   });
+
 }
 
 function showLoadError(message, error) {
@@ -191,5 +218,6 @@ function updatePopup() {
   });
 }
 
+document.getElementById('view-all-downloads').addEventListener('click', openDownloadsPage);
 updatePopup();
 setInterval(updatePopup, 1000);

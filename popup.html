@@ -75,6 +75,40 @@
       color: #666;
       margin-top: 5px;
     }
+    .saved-location {
+      color: #666;
+      font-size: 11px;
+      margin-top: 6px;
+      overflow-wrap: anywhere;
+    }
+    .file-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 7px;
+    }
+    .file-action,
+    .view-all-downloads {
+      border: 0;
+      padding: 0;
+      background: none;
+      color: #0066cc;
+      font: inherit;
+      cursor: pointer;
+    }
+    .file-action:hover,
+    .view-all-downloads:hover {
+      text-decoration: underline;
+    }
+    .downloads-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #ddd;
+      margin-top: 10px;
+      padding: 10px 2px 2px;
+      color: #555;
+      font-size: 12px;
+    }
     progress {
       width: 100%;
       height: 6px;
@@ -92,6 +126,10 @@
   <h3>Recent Downloads</h3>
   <div id="downloads-container">
     <div class="no-downloads">No recent downloads</div>
+  </div>
+  <div class="downloads-footer">
+    <span>Downloads</span>
+    <button id="view-all-downloads" class="view-all-downloads" type="button">View all downloads</button>
   </div>
 
   <script src="popup.js"></script>

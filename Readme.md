@@ -10,6 +10,8 @@ Live Download Speed Monitor is a lightweight Chrome extension that displays your
 - Displays progress and an estimated transfer speed, refreshed every second.
 - Estimates time remaining while a download is in progress.
 - Shows the status of recent downloads, including downloading, paused, resumed, completed, cancelled, and interrupted.
+- Shows the full saved location of each download, with actions to reveal completed files in their folder or open them.
+- Provides a shortcut to Chrome's full Downloads page.
 - Uses the filename rather than the full local file path.
 - Shows a clear message when there are no recent downloads.
 
@@ -38,7 +40,7 @@ For development, you can also load the repository directory directly using the s
 
 ## Use
 
-The badge on the extension icon shows the number of downloads currently in progress. Select the icon to open the **Recent Downloads** popup. Active downloads appear with their file size, progress, estimated speed, and estimated time remaining. The popup also shows up to 10 recent downloads and their current status. The remaining-time estimate starts calculating after a speed sample is available. When there are no recent downloads, the popup displays **No recent downloads**.
+The badge on the extension icon shows the number of downloads currently in progress. Select the icon to open the **Recent Downloads** popup. Active downloads appear with their file size, progress, estimated speed, and estimated time remaining. The popup also shows up to 10 recent downloads and their current status. Each item shows its saved location; completed items include **Folder** and **Open** actions. Select **View all downloads** at the bottom to open Chrome's full Downloads page. The remaining-time estimate starts calculating after a speed sample is available. When there are no recent downloads, the popup displays **No recent downloads**.
 
 ## Permissions and compatibility
 
