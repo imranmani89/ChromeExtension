@@ -1,10 +1,11 @@
 # Live Download Speed Monitor
 
-Live Download Speed Monitor is a lightweight Chrome extension that displays your active downloads in the browser toolbar popup. It shows each file's name, downloaded and total size, a progress bar, and an estimated current download speed.
+Live Download Speed Monitor is a lightweight Chrome extension that displays your active downloads in the browser toolbar. Its icon badge shows the live number of active downloads, and the popup shows each file's name, downloaded and total size, a progress bar, and an estimated current download speed.
 
 ## Features
 
 - Lists downloads that are currently in progress.
+- Shows the live active-download count on the extension icon and clears the badge when there are none.
 - Shows downloaded bytes and the total size when Chrome has reported it.
 - Displays progress and an estimated transfer speed, refreshed every second.
 - Uses the filename rather than the full local file path.
@@ -22,7 +23,7 @@ The speed estimate is calculated from the change in downloaded bytes between pop
 
 ## Use
 
-Select the extension icon in the toolbar to open the **Active Downloads** popup. Any downloads currently in progress appear with their file size, progress, and estimated speed. Start or resume a download in Chrome to see it listed. When there are no active downloads, the popup displays **No active downloads**.
+The badge on the extension icon shows the number of downloads currently in progress. Select the icon to open the **Active Downloads** popup. Any downloads currently in progress appear with their file size, progress, and estimated speed. Start or resume a download in Chrome to see it listed. When there are no active downloads, the badge clears and the popup displays **No active downloads**.
 
 ## Permissions and compatibility
 
