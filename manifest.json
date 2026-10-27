@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "Live Download Speed Monitor",
+  "version": "1.0",
+  "description": "Displays live download speed, file size, and progress in a clean popup.",
+  "permissions": [
+    "downloads"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
