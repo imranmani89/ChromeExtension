@@ -53,6 +53,44 @@ function createActionButton(label, action) {
   return button;
 }
 
+function getFileIcon(filename) {
+  const extension = filename.split('.').pop().toLowerCase();
+  const iconByExtension = {
+    '7z': '🗜️',
+    avi: '🎞️',
+    bmp: '🖼️',
+    csv: '📊',
+    doc: '📄',
+    docx: '📄',
+    flac: '🎵',
+    gif: '🖼️',
+    gz: '🗜️',
+    jpeg: '🖼️',
+    jpg: '🖼️',
+    js: '💻',
+    json: '💻',
+    mkv: '🎞️',
+    mov: '🎞️',
+    mp3: '🎵',
+    mp4: '🎞️',
+    pdf: '📕',
+    png: '🖼️',
+    ppt: '📽️',
+    pptx: '📽️',
+    rar: '🗜️',
+    svg: '🖼️',
+    tar: '🗜️',
+    txt: '📄',
+    wav: '🎵',
+    webm: '🎞️',
+    xls: '📊',
+    xlsx: '📊',
+    xml: '💻',
+    zip: '🗜️'
+  };
+  return iconByExtension[extension] || '📄';
+}
+
 function openDownloadsPage() {
   chrome.tabs.create({ url: 'chrome://downloads/' }, () => {
     if (chrome.runtime.lastError) {
@@ -103,9 +141,15 @@ function renderDownloads(downloads) {
 
     const heading = document.createElement('div');
     heading.className = 'download-heading';
+    const filenameGroup = document.createElement('div');
+    filenameGroup.className = 'filename-group';
+    const fileIcon = createTextElement('span', 'file-icon', getFileIcon(filename));
+    fileIcon.setAttribute('aria-hidden', 'true');
+    filenameGroup.appendChild(fileIcon);
     const filenameElement = createTextElement('div', 'filename', filename);
     filenameElement.title = filename;
-    heading.appendChild(filenameElement);
+    filenameGroup.appendChild(filenameElement);
+    heading.appendChild(filenameGroup);
     heading.appendChild(createTextElement(
       'span',
       `status status-${status.toLowerCase()}`,

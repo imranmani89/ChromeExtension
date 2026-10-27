@@ -32,7 +32,19 @@
       justify-content: space-between;
       gap: 8px;
     }
+    .filename-group {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      gap: 6px;
+    }
+    .file-icon {
+      flex: 0 0 auto;
+      font-size: 15px;
+      line-height: 1;
+    }
     .filename {
+      min-width: 0;
       font-weight: 600;
       white-space: nowrap;
       overflow: hidden;
@@ -103,11 +115,21 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      position: sticky;
+      bottom: 0;
+      z-index: 1;
+      background: #f9f9f9;
       border-top: 1px solid #ddd;
       margin-top: 10px;
       padding: 10px 2px 2px;
       color: #555;
       font-size: 12px;
+    }
+    #downloads-container {
+      max-height: 420px;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding-right: 4px;
     }
     progress {
       width: 100%;
