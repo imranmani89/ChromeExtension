@@ -11,8 +11,12 @@ Live Download Speed Monitor is a lightweight Chrome extension that displays your
 - Estimates time remaining while a download is in progress.
 - Shows the status of recent downloads, including downloading, paused, resumed, completed, cancelled, and interrupted.
 - Shows the full saved location of each download, with actions to reveal completed files in their folder or open them.
+- Provides pause, resume, and cancel controls for active downloads.
+- Lets you search recent downloads and filter by status or file category.
+- Removes completed entries from Chrome's download history without deleting the downloaded files.
+- Opens the original source page for downloads when the source uses HTTP or HTTPS.
 - Provides a shortcut to Chrome's full Downloads page.
-- Uses the filename rather than the full local file path.
+- Keeps filenames prominent while showing the saved path as secondary information.
 - Shows a clear message when there are no recent downloads.
 
 The speed estimate is calculated from the change in downloaded bytes between popup updates. It starts at `0 Bytes/s` until the next sample is available. The popup only refreshes while it is open.
@@ -40,7 +44,7 @@ For development, you can also load the repository directory directly using the s
 
 ## Use
 
-The badge on the extension icon shows the number of downloads currently in progress. Select the icon to open the **Recent Downloads** popup. Active downloads appear with their file size, progress, estimated speed, and estimated time remaining. The popup also shows up to 10 recent downloads and their current status. Each item shows its saved location; completed items include **Folder** and **Open** actions. Select **View all downloads** at the bottom to open Chrome's full Downloads page. The remaining-time estimate starts calculating after a speed sample is available. When there are no recent downloads, the popup displays **No recent downloads**.
+The badge on the extension icon shows the number of downloads currently in progress. Select the icon to open the download manager. Search by filename or source site, or filter by status and file category. The popup shows up to 100 recent downloads and scrolls the list independently of its footer. Active downloads include controls to pause, resume, or cancel them, alongside progress, estimated speed, and estimated time remaining. Recent items show their saved location; completed items include **Folder** and **Open** actions. **Source** opens the original HTTP(S) page. **Clear completed** removes completed entries from Chrome's download history but does not delete the files from the device. Select **View all downloads** at the bottom to open Chrome's full Downloads page. The remaining-time estimate starts calculating after a speed sample is available.
 
 ## Permissions and compatibility
 
