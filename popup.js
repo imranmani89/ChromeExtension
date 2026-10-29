@@ -136,6 +136,20 @@ function createButton(label, className, action) {
   return button;
 }
 
+function createIconButton(label, iconPath, className, action, title = label) {
+  const button = createButton('', `${className} icon-action`, action);
+  const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  icon.setAttribute('viewBox', '0 0 24 24');
+  icon.setAttribute('aria-hidden', 'true');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', iconPath);
+  icon.appendChild(path);
+  button.appendChild(icon);
+  button.setAttribute('aria-label', label);
+  button.title = title;
+  return button;
+}
+
 function showMessage(message, isError = false) {
   const messageElement = document.getElementById('operation-message');
   messageElement.textContent = message;
@@ -164,6 +178,19 @@ function openDownloadsPage() {
       console.error('Unable to open the Downloads page:', error.message);
     }
   });
+}
+
+function openDownloadedFile(id) {
+  try {
+    const result = chrome.downloads.open(id);
+    if (result && typeof result.catch === 'function') {
+      result.catch((error) => {
+        showMessage(error.message || 'Unable to open the downloaded file.', true);
+      });
+    }
+  } catch (error) {
+    showMessage(error.message || 'Unable to open the downloaded file.', true);
+  }
 }
 
 function openSource(url) {
@@ -349,11 +376,38 @@ function renderDownloads(downloads) {
         }, 'Download cancelled.');
       }));
     } else if (item.state === 'complete') {
-      actions.appendChild(createButton('Folder', 'file-action', () => chrome.downloads.show(id)));
-      actions.appendChild(createButton('Open', 'file-action', () => chrome.downloads.open(id)));
+      const filePath = item.filename || 'Unknown file';
+      const separatorIndex = Math.max(filePath.lastIndexOf('/'), filePath.lastIndexOf('\\'));
+      const folderPath = separatorIndex === 2 && filePath[1] === ':'
+        ? filePath.slice(0, 3)
+        : separatorIndex >= 0
+          ? filePath.slice(0, separatorIndex) || filePath.slice(0, 1)
+          : '';
+      const folderButton = createIconButton(
+        'Show in folder',
+        'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z',
+        'file-action',
+        () => chrome.downloads.show(id),
+        `Folder: ${folderPath || filePath}`
+      );
+      actions.appendChild(folderButton);
+      const openButton = createIconButton(
+        'Open file',
+        'M14 3h7v7M21 3l-9 9M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6',
+        'file-action',
+        () => openDownloadedFile(id),
+        `Open: ${filePath}`
+      );
+      actions.appendChild(openButton);
     }
     if (item.url) {
-      actions.appendChild(createButton('Source', 'file-action', () => openSource(item.url)));
+      actions.appendChild(createIconButton(
+        'Open source page',
+        'M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.72M14 11a5 5 0 0 0-7.07 0l-3 3A5 5 0 0 0 11 21.07l1.72-1.72',
+        'file-action',
+        () => openSource(item.url),
+        'Open source page'
+      ));
     }
     if (actions.children.length > 0) card.appendChild(actions);
 
@@ -413,6 +467,29 @@ function updatePopup() {
     });
   });
 }
+
+const searchWrap = document.querySelector('.search-wrap');
+const filterToggle = document.getElementById('toggle-filters');
+const filtersPopup = document.getElementById('filters-popup');
+document.getElementById('copyright-year').textContent = String(new Date().getFullYear());
+
+function setFiltersPopupOpen(isOpen) {
+  filtersPopup.hidden = !isOpen;
+  filterToggle.setAttribute('aria-expanded', String(isOpen));
+}
+
+filterToggle.addEventListener('click', () => {
+  setFiltersPopupOpen(filtersPopup.hidden);
+});
+document.addEventListener('click', (event) => {
+  if (!searchWrap.contains(event.target)) setFiltersPopupOpen(false);
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && !filtersPopup.hidden) {
+    setFiltersPopupOpen(false);
+    filterToggle.focus();
+  }
+});
 
 document.getElementById('search-downloads').addEventListener('input', (event) => {
   filters.search = event.target.value;

@@ -1,6 +1,6 @@
-# Live Download Speed Monitor
+# DropMunk
 
-Live Download Speed Monitor is a lightweight Chrome extension that displays your active downloads in the browser toolbar. Its icon badge shows the live number of active downloads, and the popup shows each file's name, downloaded and total size, a progress bar, and an estimated current download speed.
+Dropmunk ---Manage your downloads smartly. DropMunk is a lightweight Chrome extension that displays your active downloads in the browser toolbar. Its icon badge shows the live number of active downloads, and the popup shows each file's name, downloaded and total size, a progress bar, and an estimated current download speed.
 
 ## Features
 
@@ -29,7 +29,7 @@ The packaging script requires Node.js and has no third-party dependencies. From 
 node pack-extension.js
 ```
 
-This creates `dist/live-download-speed-monitor.zip`. The archive contains the extension's manifest, popup files, and background service worker. The generated `dist/` folder and any `.pem` private keys or `.crx` files are ignored by Git.
+This creates `dist/dropmunk.zip` and refreshes `packed-extension/live-download-speed-monitor.zip`. Both archives contain the extension's manifest, popup files, background service worker, and icon. The generated `dist/` folder and any `.pem` private keys or `.crx` files are ignored by Git.
 
 ## Install in Chrome
 

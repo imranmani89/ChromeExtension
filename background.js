@@ -19,6 +19,8 @@ function updateBadge() {
   });
 }
 
+chrome.runtime.onInstalled.addListener(updateBadge);
+chrome.runtime.onStartup.addListener(updateBadge);
 chrome.downloads.onCreated.addListener(updateBadge);
 chrome.downloads.onChanged.addListener((delta) => {
   if (delta.state) {

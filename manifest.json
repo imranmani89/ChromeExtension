@@ -1,15 +1,29 @@
 {
   "manifest_version": 3,
-  "name": "Live Download Speed Monitor",
-  "version": "2.0",
-  "description": "Displays live download speed, file size, and progress in a clean popup.",
+  "name": "DropMunk",
+  "version": "2.3",
+  "description": "Dropmunk - Manage your downloads smartly",
+  "icons": {
+    "16": "icons/icon2.png",
+    "32": "icons/icon2.png",
+    "48": "icons/icon2.png",
+    "128": "icons/icon2.png"
+  },
   "permissions": [
-    "downloads"
+    "downloads",
+    "downloads.open"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
+    "default_title": "Dropmunk ---Manage your downloads smartly",
+    "default_icon": {
+      "16": "icons/icon2.png",
+      "32": "icons/icon2.png",
+      "48": "icons/icon2.png",
+      "128": "icons/icon2.png"
+    },
     "default_popup": "popup.html"
   }
 }

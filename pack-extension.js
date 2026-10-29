@@ -2,9 +2,10 @@ const fs = require('node:fs');
 const path = require('node:path');
 const zlib = require('node:zlib');
 
-const sourceFiles = ['manifest.json', 'popup.html', 'popup.js', 'background.js'];
+const sourceFiles = ['manifest.json', 'popup.html', 'popup.js', 'background.js', 'icons/icon2.png'];
 const outputDirectory = path.join(__dirname, 'dist');
-const outputPath = path.join(outputDirectory, 'live-download-speed-monitor.zip');
+const outputPath = path.join(outputDirectory, 'dropmunk.zip');
+const legacyOutputPath = path.join(__dirname, 'packed-extension', 'live-download-speed-monitor.zip');
 
 const crcTable = new Uint32Array(256);
 for (let index = 0; index < crcTable.length; index += 1) {
@@ -83,10 +84,11 @@ endOfCentralDirectory.writeUInt32LE(centralDirectory.length, 12);
 endOfCentralDirectory.writeUInt32LE(offset, 16);
 endOfCentralDirectory.writeUInt16LE(0, 20);
 
+const archive = Buffer.concat([...localFileHeaders, centralDirectory, endOfCentralDirectory]);
 fs.mkdirSync(outputDirectory, { recursive: true });
-fs.writeFileSync(
-  outputPath,
-  Buffer.concat([...localFileHeaders, centralDirectory, endOfCentralDirectory])
-);
+fs.mkdirSync(path.dirname(legacyOutputPath), { recursive: true });
+fs.writeFileSync(outputPath, archive);
+fs.writeFileSync(legacyOutputPath, archive);
 
 console.log(`Created ${path.relative(__dirname, outputPath)}`);
+console.log(`Updated ${path.relative(__dirname, legacyOutputPath)}`);

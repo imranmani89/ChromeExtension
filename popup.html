@@ -34,14 +34,11 @@
       gap: 10px;
     }
     .brand-mark {
-      display: grid;
+      display: block;
       width: 36px;
       height: 36px;
-      place-items: center;
-      border-radius: 11px;
-      background: #e8efff;
-      color: #315bd6;
-      font-size: 19px;
+      border-radius: 8px;
+      object-fit: cover;
     }
     .brand-copy h1 {
       margin: 0;
@@ -55,20 +52,35 @@
       font-size: 11px;
     }
     .clear-button {
+      display: grid;
+      flex: 0 0 28px;
+      width: 28px;
+      height: 28px;
+      place-items: center;
       border: 0;
-      padding: 6px 0 6px 8px;
+      border-radius: 6px;
+      padding: 0;
       background: none;
       color: #66738d;
-      font: inherit;
-      font-size: 11px;
       cursor: pointer;
     }
     .clear-button:hover {
-      color: #315bd6;
+      background: #fff0f0;
+      color: #a54141;
+    }
+    .clear-button svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
     }
     .search-wrap {
       position: relative;
       margin-bottom: 10px;
+      z-index: 2;
     }
     .search-icon {
       position: absolute;
@@ -84,7 +96,7 @@
       border: 1px solid #e0e5ee;
       border-radius: 9px;
       outline: none;
-      padding: 0 10px 0 32px;
+      padding: 0 42px 0 32px;
       background: #fff;
       color: #172033;
       font: inherit;
@@ -95,15 +107,62 @@
       border-color: #8da7f5;
       box-shadow: 0 0 0 2px #e6ecff;
     }
-    .filter-row {
+    .filter-toggle {
+      position: absolute;
+      top: 4px;
+      right: 5px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      width: 26px;
+      height: 26px;
+      place-items: center;
+      border: 0;
+      border-radius: 6px;
+      padding: 0;
+      background: transparent;
+      color: #748099;
+      cursor: pointer;
+    }
+    .filter-toggle:hover,
+    .filter-toggle[aria-expanded="true"] {
+      background: #edf2ff;
+      color: #315bd6;
+    }
+    .filter-toggle svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+    .filter-popup {
+      position: absolute;
+      top: calc(100% + 5px);
+      right: 0;
+      display: grid;
+      width: 238px;
+      gap: 9px;
+      border: 1px solid #e0e5ee;
+      border-radius: 8px;
+      padding: 10px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(28, 43, 74, 0.14);
+    }
+    .filter-popup[hidden] {
+      display: none;
+    }
+    .filter-field {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      align-items: center;
       gap: 8px;
-      margin-bottom: 10px;
+      color: #53617a;
+      font-size: 11px;
     }
     .filter-select {
       width: 100%;
-      height: 32px;
+      height: 30px;
       border: 1px solid #e0e5ee;
       border-radius: 8px;
       outline: none;
@@ -264,6 +323,22 @@
       font-weight: 600;
       cursor: pointer;
     }
+    .file-action.icon-action {
+      display: grid;
+      width: 30px;
+      height: 26px;
+      place-items: center;
+      padding: 4px;
+    }
+    .icon-action svg {
+      width: 15px;
+      height: 15px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
     .file-action:hover {
       border-color: #b8c7f5;
       background: #f7f8ff;
@@ -299,6 +374,10 @@
       color: #748099;
       font-size: 11px;
     }
+    .copyright {
+      font-size: 9px;
+      white-space: nowrap;
+    }
     .view-all-downloads {
       border: 0;
       padding: 3px 0 3px 8px;
@@ -323,38 +402,48 @@
 <body>
   <header class="app-header">
     <div class="brand">
-      <div class="brand-mark" aria-hidden="true">↓</div>
+      <img class="brand-mark" src="icons/icon2.png" alt="">
       <div class="brand-copy">
-        <h1>Downloads</h1>
-        <p>Track and manage your files</p>
+        <h1>DropMunk</h1>
+        <p>Dropmunk - Manage your downloads smartly</p>
       </div>
     </div>
-    <button id="clear-completed" class="clear-button" type="button">Clear completed</button>
+    <button id="clear-completed" class="clear-button" type="button" aria-label="Clear completed downloads" title="Clear completed downloads">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M5 7l1 14h12l1-14M9 7V4h6v3"></path></svg>
+    </button>
   </header>
 
-  <label class="search-wrap">
+  <div class="search-wrap">
     <span class="search-icon" aria-hidden="true">⌕</span>
-    <input id="search-downloads" type="search" placeholder="Search files or source sites" autocomplete="off">
-  </label>
-
-  <div class="filter-row">
-    <select id="status-filter" class="filter-select" aria-label="Filter by status">
-      <option value="all">All statuses</option>
-      <option value="active">Downloading</option>
-      <option value="paused">Paused</option>
-      <option value="completed">Completed</option>
-      <option value="cancelled">Cancelled</option>
-      <option value="interrupted">Interrupted</option>
-    </select>
-    <select id="category-filter" class="filter-select" aria-label="Filter by file type">
-      <option value="all">All file types</option>
-      <option value="documents">Documents</option>
-      <option value="images">Images</option>
-      <option value="video">Video</option>
-      <option value="audio">Audio</option>
-      <option value="archives">Archives</option>
-      <option value="other">Other</option>
-    </select>
+    <input id="search-downloads" type="search" aria-label="Search downloads" placeholder="Search files or source sites" autocomplete="off">
+    <button id="toggle-filters" class="filter-toggle" type="button" aria-label="Show download filters" aria-expanded="false" aria-controls="filters-popup" title="Filter downloads">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16l-6.2 7.1v5.2l-3.6 1.8v-7L4 5z"></path></svg>
+    </button>
+    <div id="filters-popup" class="filter-popup" hidden>
+      <label class="filter-field">
+        <span>Status</span>
+        <select id="status-filter" class="filter-select" aria-label="Filter by status">
+          <option value="all">All statuses</option>
+          <option value="active">Downloading</option>
+          <option value="paused">Paused</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="interrupted">Interrupted</option>
+        </select>
+      </label>
+      <label class="filter-field">
+        <span>File type</span>
+        <select id="category-filter" class="filter-select" aria-label="Filter by file type">
+          <option value="all">All file types</option>
+          <option value="documents">Documents</option>
+          <option value="images">Images</option>
+          <option value="video">Video</option>
+          <option value="audio">Audio</option>
+          <option value="archives">Archives</option>
+          <option value="other">Other</option>
+        </select>
+      </label>
+    </div>
   </div>
 
   <div id="operation-message" class="operation-message" role="status" aria-live="polite"></div>
@@ -364,7 +453,7 @@
   </main>
 
   <footer class="downloads-footer">
-    <span>Download manager</span>
+    <span class="copyright">Copyright &copy; <span id="copyright-year"></span> DropMunk. All rights reserved.</span>
     <button id="view-all-downloads" class="view-all-downloads" type="button">View all downloads →</button>
   </footer>
 
